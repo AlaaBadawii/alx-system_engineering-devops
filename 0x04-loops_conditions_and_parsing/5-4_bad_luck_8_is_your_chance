@@ -7,7 +7,7 @@ while (( i <= 10 )); do
     if (( i == 4 )); then
         echo "bad luck"
     elif ((i == 8)); then
-    	echo "good luch"
+    	echo "good luck"
     else
         echo "Best School"
     fi
