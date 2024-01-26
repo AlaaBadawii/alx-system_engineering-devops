@@ -4,7 +4,7 @@
 # -In a list format
 # -Where only the part of the name after the first dash is displayed
 
-for file in $(ls); do
+for file in *; do
 	if [ -f "$file" ]; then
 		part_after_dash="${file#*-}"
 		echo "$part_after_dash"
