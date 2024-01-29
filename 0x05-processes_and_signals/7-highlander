@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 # script that displays To infinity and beyond indefinitely.
 
-trap 'echo "I am invincible!!!"' SIGTERM
+sigterm_handler() {
+	echo "Killed"
+	exit 0
+}
+
+trap 'sigterm_handler' SIGTERM
+
 while :; do
 	echo "To infinity and beyond"
 	sleep 2
