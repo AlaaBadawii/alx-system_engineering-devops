@@ -1,4 +1,4 @@
-package { 'python3-pip':
+package { 'pip3':
   ensure => installed,
 }
 
