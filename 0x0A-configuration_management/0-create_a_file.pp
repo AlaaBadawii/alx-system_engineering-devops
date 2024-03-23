@@ -1,3 +1,4 @@
+# puupet to create a file
 file { '/tmp/school':
   ensure  => 'present',
   mode    => '0744',
