@@ -1,7 +1,5 @@
-# Changes /etc/default/nginx file to increase limit
-# current nginx request open files
-
-exec {'Increase nginx limit':
-  command => "sed -i 's/15/10000/' /etc/default/nginx; sudo service nginx restart",
-  path    => '/usr/bin/:/usr/local/bin/:/bin/'
-}
+#!/usr/bin/env bash
+# Script that make nginx listen to port 80
+rm /etc/nginx/sites-enabled/default
+ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx restart
