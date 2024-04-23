@@ -1,37 +1,46 @@
 #!/usr/bin/python3
+import requests
+import sys
+
 """
-A Script that, uses this REST API, for a given employee ID, returns
-information about his/her TODO list progress
+    script that, using this REST API,
+    for a given employee ID, returns information about,
+    his/her TODO list progress.
 """
 
-import json
-import requests
-from sys import argv
+
+def get_employee_info(em_id):
+    """
+        fun to retrieve info about the employee
+    """
+
+    url = f'https://jsonplaceholder.typicode.com/todos?userId={em_id}'
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        todo_list = response.json()
+
+        done_tasks = [
+            done for done in todo_list if done['completed']
+        ]
+
+        total_tasks = len(todo_list)
+        num_of_done_tasks = len(done_tasks)
+
+        user_response = requests.get(
+            f'https://jsonplaceholder.typicode.com/users/{em_id}'
+        )
+
+        if user_response.status_code == 200:
+            user_data = user_response.json()
+            username = user_data['username']
+
+        print(f'Employee {username} is done with tasks \
+                ({num_of_done_tasks}/{total_tasks}):')
+        for todo in done_tasks:
+            print(f'\t{todo["title"]}')
 
 
 if __name__ == "__main__":
-
-    sessionReq = requests.Session()
-
-    idEmp = argv[1]
-    idURL = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(idEmp)
-    nameURL = 'https://jsonplaceholder.typicode.com/users/{}'.format(idEmp)
-
-    employee = sessionReq.get(idURL)
-    employeeName = sessionReq.get(nameURL)
-
-    json_req = employee.json()
-    name = employeeName.json()['name']
-
-    totalTasks = 0
-
-    for done_tasks in json_req:
-        if done_tasks['completed']:
-            totalTasks += 1
-
-    print("Employee {} is done with tasks({}/{}):".
-          format(name, totalTasks, len(json_req)))
-
-    for done_tasks in json_req:
-        if done_tasks['completed']:
-            print("\t " + done_tasks.get('title'))
+    em_id = sys.argv[1]
+    get_employee_info(em_id)
