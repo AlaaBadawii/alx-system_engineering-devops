@@ -30,7 +30,7 @@ def get_em_todo_list(em_id):
           format(user_name, num_of_done_tasks, total_num_of_tasks))
 
     for task in done_tasks:
-        print(f'\t{task["title"]}')
+        print(f'\t {task["title"]}')
 
 
 if __name__ == "__main__":
