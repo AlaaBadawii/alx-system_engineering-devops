@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 """
-A Script that, uses a REST API, for a given userployee ID, returns
-information about his/her TODO list progress
-extend Python script to export data in the JSON format.
+A Script that, using a REST API, for a given user ID, returns
+information about his/her TODO list progress and exports it in JSON format.
 """
 
 import json
@@ -10,36 +9,34 @@ import requests
 from sys import argv
 
 
-def getAndExportToJson(user_id):
-    sessionReq = requests.Session()
+def get_and_export_to_json(user_id):
+    session_req = requests.Session()
 
-    name_url = f'https://jsonplaceholder.typicode.com/users/{user_id}'
-    todo_url = f'https://jsonplaceholder.typicode.com/users/{user_id}/todos'
+    user_url = f'https://jsonplaceholder.typicode.com/users/{user_id}'
+    todos_url = f'https://jsonplaceholder.typicode.com/todos?userId={user_id}'
 
-    name_response = sessionReq.get(name_url)
-    todos_response = sessionReq.get(todo_url)
+    user_response = session_req.get(user_url)
+    todos_response = session_req.get(todos_url)
 
-    name = name_response.json()['username']
-    todos = todos_response.json()
+    user_data = user_response.json()
+    tasks_data = todos_response.json()
 
     all_tasks = []
-    data = {}
+    for task in tasks_data:
+        all_tasks.append({
+            "task": task.get('title'),
+            "completed": task.get('completed'),
+            "username": user_data.get('username')
+        })
 
-    for task in todos:
-        all_tasks.append(
-            {
-                "task": task.get('title'),
-                "completed": task.get('completed'),
-                "username": name
-            }
-        )
-    data = {user_id:all_tasks}
-    file_name = user_id + '.json'
+    data = {user_id: all_tasks}
 
-    with open(file=file_name, mode='w') as f:
-        json.dump(data, f)
+    file_name = f'{user_id}.json'
+
+    with open(file_name, 'w') as f:
+        json.dump(data, f, indent=4)
 
 
 if __name__ == '__main__':
     user_id = argv[1]
-    getAndExportToJson(user_id=user_id)
+    get_and_export_to_json(user_id)
