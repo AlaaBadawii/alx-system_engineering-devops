@@ -6,8 +6,8 @@
     export data in the JSON format.
 """
 
-import requests
 import json
+import requests
 
 
 def get_and_export_users_data():
