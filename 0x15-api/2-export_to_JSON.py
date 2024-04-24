@@ -17,7 +17,7 @@ def getAndExportToJson(user_id):
     todo_url = f'https://jsonplaceholder.typicode.com/users/{user_id}/todos'
 
     name_response = sessionReq.get(name_url)
-    todos_response = sessionReq.get(todo_list_url)
+    todos_response = sessionReq.get(todo_url)
 
     name = name_response.json()['username']
     todos = todos_response.json()
