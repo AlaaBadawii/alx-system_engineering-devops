@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 """
-A Script that, using a REST API, for a given user ID, returns
-information about his/her TODO list progress and exports it in JSON format.
+A sript that, uses a REST API, for a given employee ID, returns
+information about his/her TODO list progress
+and exports data in the JSON format.
 """
 
 import json
@@ -9,34 +10,32 @@ import requests
 from sys import argv
 
 
-def get_and_export_to_json(user_id):
-    session_req = requests.Session()
+if __name__ == "__main__":
 
-    user_url = f'https://jsonplaceholder.typicode.com/users/{user_id}'
-    todos_url = f'https://jsonplaceholder.typicode.com/todos?userId={user_id}'
+    sessionReq = requests.Session()
 
-    user_response = session_req.get(user_url)
-    todos_response = session_req.get(todos_url)
+    idEmp = argv[1]
+    idURL = 'https://jsonplaceholder.typicode.com/users/{}/todos'.format(idEmp)
+    nameURL = 'https://jsonplaceholder.typicode.com/users/{}'.format(idEmp)
 
-    user_data = user_response.json()
-    tasks_data = todos_response.json()
+    employee = sessionReq.get(idURL)
+    employeeName = sessionReq.get(nameURL)
 
-    all_tasks = []
-    for task in tasks_data:
-        all_tasks.append({
-            "task": task.get('title'),
-            "completed": task.get('completed'),
-            "username": user_data.get('username')
-        })
+    json_req = employee.json()
+    usr = employeeName.json()['username']
 
-    data = {user_id: all_tasks}
+    totalTasks = []
+    updateUser = {}
 
-    file_name = f'{user_id}.json'
+    for all_Emp in json_req:
+        totalTasks.append(
+            {
+                "task": all_Emp.get('title'),
+                "completed": all_Emp.get('completed'),
+                "username": usr,
+            })
+    updateUser[idEmp] = totalTasks
 
-    with open(file_name, 'w') as f:
-        json.dump(data, f)
-
-
-if __name__ == '__main__':
-    user_id = argv[1]
-    get_and_export_to_json(user_id)
+    file_Json = idEmp + ".json"
+    with open(file_Json, 'w') as f:
+        json.dump(updateUser, f)
