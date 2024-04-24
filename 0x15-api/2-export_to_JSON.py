@@ -34,7 +34,7 @@ def get_and_export_to_json(user_id):
     file_name = f'{user_id}.json'
 
     with open(file_name, 'w') as f:
-        json.dump(data, f, indent=4)
+        json.dump(data, f)
 
 
 if __name__ == '__main__':
