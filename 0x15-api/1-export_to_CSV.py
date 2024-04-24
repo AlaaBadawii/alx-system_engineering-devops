@@ -20,7 +20,7 @@ def getAndExportToCsv(em_id):
     name_res = sessionReq.get(name_url)
     todos_list_res = sessionReq.get(todo_list_url)
 
-    name = name_res.json()['name']
+    name = name_res.json()['username']
     todos = todos_list_res.json()
     file_name = em_id + '.csv'
 
