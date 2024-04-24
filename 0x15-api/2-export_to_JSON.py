@@ -30,7 +30,7 @@ def getAndExportToJson(user_id):
             {
                 "task": task.get('title'),
                 "completed": task.get('completed'),
-                "username": task.get('username')
+                "username": name
             }
         )
     data[user_id] = all_tasks
