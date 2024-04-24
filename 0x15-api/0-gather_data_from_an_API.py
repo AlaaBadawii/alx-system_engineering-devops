@@ -6,7 +6,6 @@
 
 import requests
 from sys import argv
-import json
 
 
 def get_em_todo_list(em_id):
@@ -27,7 +26,8 @@ def get_em_todo_list(em_id):
     num_of_done_tasks = len(done_tasks)
     total_num_of_tasks = len(todos_data)
 
-    print(f'Employee {user_name} is done with tasks ({num_of_done_tasks}/{total_num_of_tasks}):')
+    print(f'Employee {user_name} is done with tasks \
+          ({num_of_done_tasks}/{total_num_of_tasks}):')
     for task in done_tasks:
         print(f'\t{task["title"]}')
 
