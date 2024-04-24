@@ -33,7 +33,7 @@ def getAndExportToJson(user_id):
                 "username": name
             }
         )
-    data[user_id] = all_tasks
+    data = {user_id:all_tasks}
     file_name = user_id + '.json'
 
     with open(file=file_name, mode='w') as f:
